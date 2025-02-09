@@ -1,0 +1,183 @@
+[gd_scene load_steps=13 format=3 uid="uid://d3x7lgovmsmmr"]
+
+[ext_resource type="Theme" uid="uid://d1kbq1nrnibof" path="res://internal/scenes/theme.tres" id="1_ll67t"]
+[ext_resource type="TileSet" uid="uid://cb74ypis1pp00" path="res://internal/tiles/terrain.tres" id="1_ltxsi"]
+[ext_resource type="Texture2D" uid="uid://cj6dv8npunecs" path="res://internal/tiles/Floor.png" id="1_mp4gy"]
+[ext_resource type="Script" path="res://internal/scenes/level_editor/level_editor.gd" id="2_qyros"]
+[ext_resource type="Script" path="res://internal/scenes/level_editor/level_editor_camera.gd" id="2_wmebt"]
+[ext_resource type="Texture2D" uid="uid://cbxxvlhaxer5o" path="res://internal/tiles/Wall.png" id="2_ykf62"]
+[ext_resource type="Texture2D" uid="uid://cgipfwlavc38" path="res://internal/tiles/Target.png" id="3_vor6s"]
+[ext_resource type="Texture2D" uid="uid://5b8wrco4604t" path="res://internal/tiles/Crate.png" id="4_4vkpd"]
+[ext_resource type="Texture2D" uid="uid://dq0e7exxdkmhx" path="res://internal/tiles/Player.png" id="5_tquou"]
+[ext_resource type="Texture2D" uid="uid://bvloqaqmleo05" path="res://internal/tiles/Erase.png" id="6_8gjua"]
+[ext_resource type="Script" path="res://internal/scenes/level_editor/statistics.gd" id="11_mdmgo"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5vcr2"]
+size = Vector2(5, 5)
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 190
+
+[node name="PanelContainer" type="PanelContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/PanelContainer"]
+layout_mode = 2
+theme = ExtResource("1_ll67t")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ItemList" type="ItemList" parent="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer"]
+clip_contents = false
+layout_mode = 2
+auto_height = true
+item_count = 6
+max_columns = 0
+same_column_width = true
+icon_mode = 0
+item_0/text = "Floor"
+item_0/icon = ExtResource("1_mp4gy")
+item_1/text = "Wall"
+item_1/icon = ExtResource("2_ykf62")
+item_2/text = "Target"
+item_2/icon = ExtResource("3_vor6s")
+item_3/text = "Crate"
+item_3/icon = ExtResource("4_4vkpd")
+item_4/text = "Player"
+item_4/icon = ExtResource("5_tquou")
+item_5/text = "Erase"
+item_5/icon = ExtResource("6_8gjua")
+
+[node name="LevelSelection" type="HBoxContainer" parent="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/LevelSelection"]
+layout_mode = 2
+text = "Level"
+
+[node name="LevelSelection" type="SpinBox" parent="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/LevelSelection"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 114514.0
+value = 1.0
+rounded = true
+allow_greater = true
+select_all_on_focus = true
+
+[node name="Load" type="Button" parent="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Load..."
+
+[node name="Save" type="Button" parent="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Save..."
+
+[node name="SaveAs" type="Button" parent="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Save As..."
+
+[node name="Help" type="Button" parent="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Help..."
+
+[node name="Quit" type="Button" parent="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HSplitContainer"]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="HSplitContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(950, 648)
+render_target_update_mode = 4
+
+[node name="TileMap" type="TileMap" parent="HSplitContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+texture_filter = 1
+tile_set = ExtResource("1_ltxsi")
+format = 2
+script = ExtResource("2_qyros")
+
+[node name="OriginPoint" type="Sprite2D" parent="HSplitContainer/SubViewportContainer/SubViewport/TileMap"]
+texture = SubResource("PlaceholderTexture2D_5vcr2")
+
+[node name="Camera2D" type="Camera2D" parent="HSplitContainer/SubViewportContainer/SubViewport"]
+texture_filter = 1
+script = ExtResource("2_wmebt")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme = ExtResource("1_ll67t")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="LevelStatistics" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Level Statistics..."
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("11_mdmgo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="LevelSize" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LevelCenter" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TargetCount" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CrateCount" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlayerCount" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="item_selected" from="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/ItemList" to="HSplitContainer/SubViewportContainer/SubViewport/TileMap" method="_on_item_list_item_selected"]
+[connection signal="value_changed" from="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/LevelSelection/LevelSelection" to="HSplitContainer/SubViewportContainer/SubViewport/TileMap" method="_on_spin_box_value_changed"]
+[connection signal="pressed" from="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/Load" to="HSplitContainer/SubViewportContainer/SubViewport/TileMap" method="_on_load_pressed"]
+[connection signal="pressed" from="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/Save" to="HSplitContainer/SubViewportContainer/SubViewport/TileMap" method="_on_save_pressed"]
+[connection signal="pressed" from="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/SaveAs" to="HSplitContainer/SubViewportContainer/SubViewport/TileMap" method="_on_save_as_pressed"]
+[connection signal="pressed" from="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/Help" to="HSplitContainer/SubViewportContainer/SubViewport/TileMap" method="_on_help_pressed"]
+[connection signal="pressed" from="HSplitContainer/PanelContainer/MarginContainer/VBoxContainer/Quit" to="HSplitContainer/SubViewportContainer/SubViewport/TileMap" method="_on_quit_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/LevelStatistics" to="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" method="_on_level_statistics_pressed"]
